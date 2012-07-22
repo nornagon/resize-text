@@ -9,10 +9,12 @@ function resizeText(el, opts) {
     console.error("Must specify a size to resize the text into!")
     return
   }
+  var p = el.style.position
+  el.style.position = 'absolute'
   el.style.fontSize = "1px"
   var size = 1
-  while ((width && el.offsetWidth < width) &&
-         (height && el.offsetHeight < height)) {
+  while ((!width || el.offsetWidth < width) &&
+         (!height || el.offsetHeight < height)) {
     size++
     el.style.fontSize = size + "px"
   }
@@ -23,6 +25,7 @@ function resizeText(el, opts) {
   el.offsetHeight
   // Be 1px smaller than the size which exceeded the given rect.
   el.style.fontSize = (size-1) + "px"
+  el.style.position = p
 }
 function fitTextToWindow(el, ratioH, ratioW) {
   // By default, fit to the window width and 80% of its height.
